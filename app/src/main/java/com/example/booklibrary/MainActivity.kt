@@ -1,47 +1,80 @@
 package com.example.booklibrary
 
+import com.example.booklibrary.data.datasources.local.BooksLocalDataSourceImpl
+import com.example.booklibrary.presentation.viewmodels.BooksViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material3.Surface
+import com.example.booklibrary.data.BookRepositoryImpl
+import com.example.booklibrary.domain.usecases.AddBookUseCase
+import com.example.booklibrary.domain.usecases.DeleteBookUseCase
+import com.example.booklibrary.domain.usecases.GetBooksUseCase
+import com.example.booklibrary.domain.usecases.RedactionBookUseCase
+import com.example.booklibrary.navigation.Navigation
 import com.example.booklibrary.ui.theme.BookLibraryTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val booksLocalDataSource = BooksLocalDataSourceImpl(
+            context = applicationContext
+        )
+
+        val bookRepository = BookRepositoryImpl(
+            booksLocalDataSource = booksLocalDataSource
+        )
+        val addBookUseCase = AddBookUseCase(
+            bookRepository = bookRepository
+        )
+        val deleteBookUseCase = DeleteBookUseCase(
+            bookRepository = bookRepository
+        )
+        val getBooksUseCase = GetBooksUseCase(
+            bookRepository = bookRepository
+        )
+        val redactionBookUseCase = RedactionBookUseCase(
+            bookRepository = bookRepository
+        )
+        val booksViewModel = BooksViewModel(
+            addBookUseCase = addBookUseCase,
+            deleteBookUseCase = deleteBookUseCase,
+            getBooksUseCase = getBooksUseCase,
+            redactionBookUseCase = redactionBookUseCase
+        )
+
         setContent {
             BookLibraryTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface {
+                    Navigation(booksViewModel)
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BookLibraryTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    BookLibraryTheme {
+//        val navController = rememberNavController()
+//        Surface {
+////            DetailScreen(
+////                navController = navController,
+////                booksViewModel = booksViewModel,
+////            )
+////            BookListScreen(
+////                booksViewModel = booksViewModel,
+////                navController = navController,
+////            )
+////            AddBookScreen(
+////                booksViewModel: BooksViewModel = viewModel(),
+////                navController = navController
+////            )
+//        }
+//    }
+//}
