@@ -44,7 +44,7 @@ fun DetailScreen(
 
     Scaffold(
         topBar = {
-            CustomTopAppBar(book?.bookEntity?.nameOfBook ?: "No book")
+            CustomTopAppBar(book?.title ?: "No book")
         },
         snackbarHost = {
             SnackbarHost(

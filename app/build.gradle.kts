@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.20"
 }
 
 android {
@@ -57,6 +58,20 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Gson
     implementation("com.google.code.gson:gson:2.13.2")
+
+    // Material Icons
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+
+    // Retrofit with Kotlin serialization Converter
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
+
+    // Kotlin serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 }

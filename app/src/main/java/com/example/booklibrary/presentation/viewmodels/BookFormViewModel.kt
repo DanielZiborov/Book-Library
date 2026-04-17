@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.booklibrary.domain.entities.BookInfoEntity
+import com.example.booklibrary.domain.entities.BookEntity
 import com.example.booklibrary.domain.entities.Status
 import com.example.booklibrary.presentation.state.BookFormState
 import java.time.LocalDate
@@ -73,13 +73,13 @@ class BookFormViewModel : ViewModel() {
         )
     }
 
-    fun setInitial(book: BookInfoEntity?) {
+    fun setInitial(book: BookEntity?) {
         book ?: return
         state = BookFormState(
-            nameOfBook = book.bookEntity.nameOfBook,
-            author = book.bookEntity.author,
-            year = book.bookEntity.year.toString(),
-            description = book.bookEntity.description,
+            nameOfBook = book.title,
+            author = book.author,
+            year = book.year.toString(),
+            description = book.description,
             rating = book.rating,
             status = book.status,
             startDate = book.startDate,

@@ -8,10 +8,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import com.example.booklibrary.data.BookRepositoryImpl
+import com.example.booklibrary.data.datasources.remote.BooksRemoteDataSourceImpl
 import com.example.booklibrary.domain.usecases.AddBookUseCase
 import com.example.booklibrary.domain.usecases.DeleteBookUseCase
 import com.example.booklibrary.domain.usecases.GetBooksUseCase
 import com.example.booklibrary.domain.usecases.RedactionBookUseCase
+import com.example.booklibrary.domain.usecases.RefreshBooksUseCase
 import com.example.booklibrary.navigation.Navigation
 import com.example.booklibrary.ui.theme.BookLibraryTheme
 
@@ -25,8 +27,11 @@ class MainActivity : ComponentActivity() {
             context = applicationContext
         )
 
+        val booksRemoteDataSource = BooksRemoteDataSourceImpl()
+
         val bookRepository = BookRepositoryImpl(
-            booksLocalDataSource = booksLocalDataSource
+            booksLocalDataSource = booksLocalDataSource,
+            booksRemoteDataSource = booksRemoteDataSource
         )
         val addBookUseCase = AddBookUseCase(
             bookRepository = bookRepository
@@ -40,11 +45,15 @@ class MainActivity : ComponentActivity() {
         val redactionBookUseCase = RedactionBookUseCase(
             bookRepository = bookRepository
         )
+        val refreshBooksUseCase = RefreshBooksUseCase(
+            bookRepository = bookRepository
+        )
         val booksViewModel = BooksViewModel(
             addBookUseCase = addBookUseCase,
             deleteBookUseCase = deleteBookUseCase,
             getBooksUseCase = getBooksUseCase,
-            redactionBookUseCase = redactionBookUseCase
+            redactionBookUseCase = redactionBookUseCase,
+            refreshBooksUseCase = refreshBooksUseCase
         )
 
         setContent {

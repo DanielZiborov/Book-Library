@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.booklibrary.domain.entities.BookInfoEntity
+import com.example.booklibrary.domain.entities.BookEntity
 import com.example.booklibrary.navigation.Destination
 
 @Composable
-fun BookCard(bookInfo: BookInfoEntity, navController: NavController) {
+fun BookCard(bookInfo: BookEntity, navController: NavController) {
     Card(
         modifier = Modifier
             .clickable {
@@ -39,7 +39,7 @@ fun BookCard(bookInfo: BookInfoEntity, navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
-                "Name of book: ${bookInfo.bookEntity.nameOfBook}",
+                "Name of book: ${bookInfo.title}",
                 modifier = Modifier.padding(
                     horizontal = 30.dp
                 ),
@@ -48,7 +48,7 @@ fun BookCard(bookInfo: BookInfoEntity, navController: NavController) {
             )
 
             Text(
-                "Author: ${bookInfo.bookEntity.author}",
+                "Author: ${bookInfo.author}",
                 modifier = Modifier.padding(
                     horizontal = 30.dp
                 ),
@@ -57,11 +57,11 @@ fun BookCard(bookInfo: BookInfoEntity, navController: NavController) {
             )
 
             Text(
-                "Year: ${bookInfo.bookEntity.year}"
+                "Year: ${bookInfo.year}"
             )
 
             Text(
-                "Description: ${bookInfo.bookEntity.description}",
+                "Description: ${bookInfo.description}",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(horizontal = 30.dp)
