@@ -12,10 +12,11 @@ import com.example.booklibrary.domain.entities.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.UUID
+import javax.inject.Inject
 
-class BookRepositoryImpl(
-    val booksLocalDataSource: BooksLocalDataSource,
-    val booksRemoteDataSource: BooksRemoteDataSource
+class BookRepositoryImpl @Inject constructor(
+    private val booksLocalDataSource: BooksLocalDataSource,
+    private val booksRemoteDataSource: BooksRemoteDataSource
 ) : BookRepository {
 
     override fun getAllBooks(status: Status?, sortType: String?): Flow<List<BookEntity>> {

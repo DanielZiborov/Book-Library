@@ -5,8 +5,9 @@ import com.example.booklibrary.domain.BookRepository
 import com.example.booklibrary.domain.entities.BookEntity
 import com.example.booklibrary.domain.entities.Status
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetBooksUseCase(
+class GetBooksUseCase @Inject constructor(
      private val bookRepository: BookRepository
 ): UseCase<Flow<List<BookEntity>>, Parameters> {
 

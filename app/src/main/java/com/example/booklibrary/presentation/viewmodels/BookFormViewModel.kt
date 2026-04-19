@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.booklibrary.domain.entities.BookEntity
 import com.example.booklibrary.domain.entities.Status
 import com.example.booklibrary.presentation.state.BookFormState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
+
 
 class BookFormViewModel : ViewModel() {
     private val nowLocalDate = LocalDate.now()

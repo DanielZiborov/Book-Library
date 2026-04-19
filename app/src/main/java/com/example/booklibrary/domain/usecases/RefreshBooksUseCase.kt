@@ -3,8 +3,9 @@ package com.example.booklibrary.domain.usecases
 import com.example.booklibrary.core.network.NetworkResult
 import com.example.booklibrary.core.usecases.SuspendUseCase
 import com.example.booklibrary.domain.BookRepository
+import javax.inject.Inject
 
-class RefreshBooksUseCase(
+class RefreshBooksUseCase @Inject constructor(
     private val bookRepository: BookRepository
 ): SuspendUseCase<NetworkResult<Unit>,Unit> {
 

@@ -3,8 +3,9 @@ package com.example.booklibrary.data.datasources.local
 import com.example.booklibrary.data.datasources.local.db.BooksDao
 import com.example.booklibrary.data.models.BookModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class BooksLocalDataSourceImpl(
+class BooksLocalDataSourceImpl @Inject constructor(
     private val booksDao: BooksDao
 ): BooksLocalDataSource {
 

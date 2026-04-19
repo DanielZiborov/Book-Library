@@ -6,8 +6,9 @@ import com.example.booklibrary.domain.entities.BookEntity
 import com.example.booklibrary.domain.entities.Status
 import java.time.LocalDate
 import java.util.UUID
+import javax.inject.Inject
 
-class AddBookUseCase(
+class AddBookUseCase @Inject constructor(
     private val bookRepository: BookRepository
 ) : SuspendUseCase<Unit, AddParams> {
 

@@ -19,14 +19,17 @@ import com.example.booklibrary.core.usecases.invoke
 import com.example.booklibrary.domain.usecases.AddParams
 import com.example.booklibrary.domain.usecases.Parameters
 import com.example.booklibrary.domain.usecases.RedactParams
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class BooksViewModel(
+@HiltViewModel
+class BooksViewModel @Inject constructor(
     private val addBookUseCase: AddBookUseCase,
     private val redactionBookUseCase: RedactionBookUseCase,
     private val deleteBookUseCase: DeleteBookUseCase,
