@@ -8,12 +8,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import com.example.booklibrary.data.BookRepositoryImpl
+import com.example.booklibrary.data.datasources.local.db.BooksDao
 import com.example.booklibrary.data.datasources.remote.BooksRemoteDataSourceImpl
 import com.example.booklibrary.domain.usecases.AddBookUseCase
 import com.example.booklibrary.domain.usecases.DeleteBookUseCase
+import com.example.booklibrary.domain.usecases.FilterBooksUseCase
 import com.example.booklibrary.domain.usecases.GetBooksUseCase
 import com.example.booklibrary.domain.usecases.RedactionBookUseCase
 import com.example.booklibrary.domain.usecases.RefreshBooksUseCase
+import com.example.booklibrary.domain.usecases.SortBooksUseCase
 import com.example.booklibrary.navigation.Navigation
 import com.example.booklibrary.ui.theme.BookLibraryTheme
 
@@ -23,8 +26,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val app = applicationContext as App
+
         val booksLocalDataSource = BooksLocalDataSourceImpl(
-            context = applicationContext
+            booksDao = app.booksDataBase.dao
         )
 
         val booksRemoteDataSource = BooksRemoteDataSourceImpl()
@@ -48,12 +53,20 @@ class MainActivity : ComponentActivity() {
         val refreshBooksUseCase = RefreshBooksUseCase(
             bookRepository = bookRepository
         )
+        val filterBooksUseCase = FilterBooksUseCase(
+            bookRepository = bookRepository
+        )
+        val sortBooksUseCase = SortBooksUseCase(
+            bookRepository = bookRepository
+        )
         val booksViewModel = BooksViewModel(
             addBookUseCase = addBookUseCase,
             deleteBookUseCase = deleteBookUseCase,
             getBooksUseCase = getBooksUseCase,
             redactionBookUseCase = redactionBookUseCase,
-            refreshBooksUseCase = refreshBooksUseCase
+            refreshBooksUseCase = refreshBooksUseCase,
+            filterBooksUseCase = filterBooksUseCase,
+            sortBooksUseCase = sortBooksUseCase
         )
 
         setContent {

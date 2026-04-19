@@ -7,19 +7,19 @@ val data = BookData(
     books = listOf(
         BookModel(
             id = "b1a2c3d4-1111-4a11-9f2b-1c7e8d9a0b11",
-            title = "Мастер и Маргарита",
-            author = "Михаил Булгаков",
+            title = "TEST1",
+            author = "TEST1",
             year = 1967,
-            description = "Роман о Москве 1930-х годов, дьяволе и вечной любви.",
+            description = "TEST1",
             readStatus = "не начата",
             updatedAt = "2026-04-05T10:00:00"
         ),
         BookModel(
             id = "b2b3c4d5-2222-4b22-8d3c-2f6d4b7e2c22",
-            title = "Преступление и наказание",
-            author = "Фёдор Достоевский",
+            title = "TEST2",
+            author = "TEST2",
             year = 1866,
-            description = "История студента Раскольникова и его моральной борьбы после убийства.",
+            description = "TEST2",
             readStatus = "в процессе",
             rating = 4,
             startDate = "2026-04-01",
@@ -27,19 +27,19 @@ val data = BookData(
         ),
         BookModel(
             id = "b3c4d5e6-3333-4c33-9e44-3f7e1d2c3d33",
-            title = "TEST1",
-            author = "TEST1",
+            title = "TEST3",
+            author = "TEST3",
             year = 1967,
-            description = "TEST1",
+            description = "TEST3",
             readStatus = "прочитана",
             updatedAt = "2026-04-05T10:00:00"
         ),
         BookModel(
             id = "b4d5e6f7-4444-4d44-8f55-4a1b2c3d4e44",
-            title = "TEST2",
-            author = "TEST2",
+            title = "TEST4",
+            author = "TEST4",
             year = 1967,
-            description = "TEST2",
+            description = "TEST4",
             updatedAt = "2026-04-05T10:00:00"
         )
     )

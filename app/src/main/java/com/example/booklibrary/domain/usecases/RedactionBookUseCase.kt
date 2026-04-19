@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 class RedactionBookUseCase(private val bookRepository: BookRepository) {
-    fun redactionBook(
+    suspend fun redactionBook(
         id: UUID,
         nameOfBook: String,
         author: String,
@@ -18,7 +18,7 @@ class RedactionBookUseCase(private val bookRepository: BookRepository) {
         startDate: LocalDate?,
         endDate: LocalDate?
     ) {
-        bookRepository.redactionBook(
+        bookRepository.upsertBook(
             BookEntity(
                 author = author,
                 description = description,

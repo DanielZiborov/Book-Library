@@ -1,8 +1,11 @@
 package com.example.booklibrary.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Entity(tableName = "books_table")
 @Serializable
 data class BookModel(
     @SerialName("author")
@@ -11,8 +14,9 @@ data class BookModel(
     val description: String = "",
     @SerialName("endDate")
     val endDate: String? = null,
+    @PrimaryKey
     @SerialName("id")
-    val id: String = "",
+    val id: String,
     @SerialName("rating")
     val rating: Int? = null,
     @SerialName("readStatus")

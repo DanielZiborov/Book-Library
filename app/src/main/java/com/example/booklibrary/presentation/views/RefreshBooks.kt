@@ -14,7 +14,7 @@ import androidx.navigation.NavController
 import com.example.booklibrary.domain.entities.BookEntity
 
 @Composable
-fun RefreshBooks (
+fun RefreshBooks(
     books: List<BookEntity>,
     isRefreshing: Boolean,
     modifier: Modifier = Modifier,
@@ -33,11 +33,11 @@ fun RefreshBooks (
         ) {
             items(books) { book ->
                 BookCard(
-                    bookInfo= book,
+                    bookInfo = book,
                     navController = navController
                 )
             }
-            item{ Spacer(modifier = Modifier.height(80.dp)) }
+            item { Spacer(modifier = Modifier.height(80.dp)) }
         }
     }
 }

@@ -12,7 +12,7 @@ fun BookModel.toEntity() = BookEntity(
     endDate = endDate?.let { LocalDate.parse(it) },
     id = UUID.fromString(id),
     rating = rating ?: 0,
-    status = toStatusEntity(readStatus),
+    status = readStatus.toStatusEntity(),
     startDate = startDate?.let { LocalDate.parse(it) },
     title = title,
     year = year
@@ -24,22 +24,9 @@ fun BookEntity.toModel() = BookModel(
     endDate = endDate?.toString(),
     id = id.toString(),
     rating = rating,
-    readStatus = toStatusModel(status),
+    readStatus = status.toStatusModel(),
     startDate = startDate?.toString(),
     title = title,
     updatedAt = LocalDate.now().toString(),
     year = year
 )
-
-fun toStatusEntity(readStatus: String) = when (readStatus) {
-    "не начата" -> Status.NOTREADING
-    "в процессе" -> Status.INPROGRESS
-    "прочитана" -> Status.READING
-    else -> Status.NOTREADING
-}
-
-fun toStatusModel(status: Status) = when (status) {
-    Status.NOTREADING -> "не начата"
-    Status.INPROGRESS -> "в процессе"
-    Status.READING -> "прочитана"
-}

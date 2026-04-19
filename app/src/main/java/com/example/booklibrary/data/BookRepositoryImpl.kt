@@ -5,12 +5,11 @@ import com.example.booklibrary.data.datasources.local.BooksLocalDataSource
 import com.example.booklibrary.data.datasources.remote.BooksRemoteDataSource
 import com.example.booklibrary.data.mappers.toEntity
 import com.example.booklibrary.data.mappers.toModel
-import com.example.booklibrary.data.models.BookModel
+import com.example.booklibrary.data.mappers.toStatusModel
 import com.example.booklibrary.domain.BookRepository
 import com.example.booklibrary.domain.entities.BookEntity
-import kotlinx.coroutines.delay
+import com.example.booklibrary.domain.entities.Status
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.util.UUID
 
@@ -31,7 +30,9 @@ class BookRepositoryImpl(
         return when (val result = booksRemoteDataSource.getBooksFromRemote()) {
 
             is NetworkResult.Success -> {
-                booksLocalDataSource.putBooksInCache(result.data?:emptyList())
+                if(result.data != null){
+                    booksLocalDataSource.upsertBooks(result.data)
+                }
                 NetworkResult.Success(Unit)
             }
 
@@ -41,23 +42,36 @@ class BookRepositoryImpl(
         }
     }
 
-    override fun addBook(
+    override suspend fun upsertBook(
         book: BookEntity
     ) {
-        booksLocalDataSource.addBookInCache(
+        booksLocalDataSource.upsertBook(
             book.toModel()
         )
     }
 
-    override fun redactionBook(
-        book: BookEntity
-    ) {
-        booksLocalDataSource.redactBookInCache(
-            book.toModel()
-        )
+    override suspend fun deleteBook(id: UUID) {
+        booksLocalDataSource.deleteBook(id.toString())
     }
 
-    override fun deleteBook(id: UUID) {
-        booksLocalDataSource.deleteBookInCache(id)
+    override fun sortByYear(): Flow<List<BookEntity>> {
+        return booksLocalDataSource.sortByYear()
+            .map{list->
+                list.map{it.toEntity()}
+            }
+    }
+
+    override fun sortByRating(): Flow<List<BookEntity>> {
+        return booksLocalDataSource.sortByRating()
+            .map{list->
+                list.map{it.toEntity()}
+            }
+    }
+
+    override fun filterOfStatus(status: Status): Flow<List<BookEntity>> {
+        return booksLocalDataSource.filterOfStatus(status.toStatusModel())
+            .map{list->
+                list.map{it.toEntity()}
+            }
     }
 }

@@ -2,16 +2,15 @@ package com.example.booklibrary.data.datasources.local
 
 import com.example.booklibrary.data.models.BookModel
 import kotlinx.coroutines.flow.Flow
-import java.util.UUID
 
 interface BooksLocalDataSource {
     fun getBooksFromCache(): Flow<List<BookModel>>
-    fun putBooksInCache(books: List<BookModel>)
-    fun addBookInCache(
+    suspend fun upsertBooks(books: List<BookModel>)
+    suspend fun upsertBook(
         book: BookModel
     )
-    fun redactBookInCache(
-        book: BookModel
-    )
-    fun deleteBookInCache(id: UUID)
+    suspend fun deleteBook(id: String)
+    fun filterOfStatus(status: String): Flow<List<BookModel>>
+    fun sortByYear(): Flow<List<BookModel>>
+    fun sortByRating(): Flow<List<BookModel>>
 }

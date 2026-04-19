@@ -18,22 +18,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.booklibrary.common.components.CustomTopAppBar
 import com.example.booklibrary.navigation.Destination
 import com.example.booklibrary.presentation.viewmodels.BooksViewModel
 import com.example.booklibrary.presentation.views.RefreshBooks
 import com.example.booklibrary.utils.showConfirm
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun BookListScreen(
@@ -47,19 +41,6 @@ fun BookListScreen(
     val isLoading by booksViewModel.isLoading
     val isRefreshing by booksViewModel.isRefreshing
 
-
-//    if (error.isNotEmpty()) {
-//        LaunchedEffect(error) {
-//            showConfirm(
-//                message = error,
-//                coroutineScope = this,
-//                snackbarHostState = snackbarHostState,
-//                withDismissAction = true,
-//                actionLabel = "",
-//                consentAction = {}
-//            )
-//        }
-//    }
     LaunchedEffect(Unit) {
         booksViewModel.uiEvent.collect {
             showConfirm(

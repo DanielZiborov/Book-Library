@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 class AddBookUseCase(private val bookRepository: BookRepository) {
-    fun addBook(
+    suspend fun addBook(
         nameOfBook: String,
         author: String,
         year: Int,
@@ -17,7 +17,7 @@ class AddBookUseCase(private val bookRepository: BookRepository) {
         startDate: LocalDate?,
         endDate: LocalDate?
     ) {
-        bookRepository.addBook(
+        bookRepository.upsertBook(
             BookEntity(
                 author = author,
                 description = description,

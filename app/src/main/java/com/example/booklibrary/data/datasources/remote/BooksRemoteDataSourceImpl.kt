@@ -13,11 +13,11 @@ class BooksRemoteDataSourceImpl : BooksRemoteDataSource {
     override suspend fun getBooksFromRemote(): NetworkResult<List<BookModel>> {
         delay(5000)
 
-        val result = safeApiCall {
-            booksApiService.getBooks()
-        }
+//        val result = safeApiCall {
+//            booksApiService.getBooks()
+//        }
 
-//        val result = successResult
+        val result = successResult
 
 //        val result = errorResult
 
