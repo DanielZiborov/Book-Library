@@ -1,8 +1,5 @@
 package com.example.booklibrary.data.datasources.local
 
-import android.content.Context
-import android.util.Log
-import androidx.core.content.edit
 import com.example.booklibrary.data.datasources.local.db.BooksDao
 import com.example.booklibrary.data.models.BookModel
 import kotlinx.coroutines.flow.Flow
@@ -11,8 +8,8 @@ class BooksLocalDataSourceImpl(
     private val booksDao: BooksDao
 ): BooksLocalDataSource {
 
-    override fun getBooksFromCache(): Flow<List<BookModel>> {
-        return booksDao.getAllBooks()
+    override fun getBooksFromCache(status: String?, sortType: String?): Flow<List<BookModel>> {
+        return booksDao.getAllBooks(status,sortType)
     }
 
     override suspend fun upsertBooks(books: List<BookModel>) {
@@ -25,17 +22,5 @@ class BooksLocalDataSourceImpl(
 
     override suspend fun deleteBook(id: String) {
         booksDao.deleteBookById(id)
-    }
-
-    override fun filterOfStatus(status: String): Flow<List<BookModel>> {
-        return booksDao.filterOfStatus(status)
-    }
-
-    override fun sortByYear(): Flow<List<BookModel>> {
-        return booksDao.sortByYear()
-    }
-
-    override fun sortByRating(): Flow<List<BookModel>> {
-        return booksDao.sortByRating()
     }
 }

@@ -18,8 +18,9 @@ class BookRepositoryImpl(
     val booksRemoteDataSource: BooksRemoteDataSource
 ) : BookRepository {
 
-    override fun getAllBooks(): Flow<List<BookEntity>> {
-        return booksLocalDataSource.getBooksFromCache()
+    override fun getAllBooks(status: Status?, sortType: String?): Flow<List<BookEntity>> {
+        val stringStatus = status?.toStatusModel()
+        return booksLocalDataSource.getBooksFromCache(stringStatus, sortType)
             .map { list ->
                 list.map { it.toEntity() }
             }
@@ -52,26 +53,5 @@ class BookRepositoryImpl(
 
     override suspend fun deleteBook(id: UUID) {
         booksLocalDataSource.deleteBook(id.toString())
-    }
-
-    override fun sortByYear(): Flow<List<BookEntity>> {
-        return booksLocalDataSource.sortByYear()
-            .map{list->
-                list.map{it.toEntity()}
-            }
-    }
-
-    override fun sortByRating(): Flow<List<BookEntity>> {
-        return booksLocalDataSource.sortByRating()
-            .map{list->
-                list.map{it.toEntity()}
-            }
-    }
-
-    override fun filterOfStatus(status: Status): Flow<List<BookEntity>> {
-        return booksLocalDataSource.filterOfStatus(status.toStatusModel())
-            .map{list->
-                list.map{it.toEntity()}
-            }
     }
 }

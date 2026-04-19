@@ -26,7 +26,9 @@ import androidx.navigation.NavController
 import com.example.booklibrary.common.components.CustomTopAppBar
 import com.example.booklibrary.navigation.Destination
 import com.example.booklibrary.presentation.viewmodels.BooksViewModel
+import com.example.booklibrary.presentation.views.FilterMenu
 import com.example.booklibrary.presentation.views.RefreshBooks
+import com.example.booklibrary.presentation.views.SortMenu
 import com.example.booklibrary.utils.showConfirm
 
 @Composable
@@ -59,7 +61,21 @@ fun BookListScreen(
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 32.dp else 0.dp
 
     Scaffold(
-        topBar = { CustomTopAppBar("Books Library") },
+        topBar = {
+            CustomTopAppBar(
+                "Books Library",
+                actions = {
+                    SortMenu(
+                        onSort = { booksViewModel.sortBy(it) },
+                        onOff = { booksViewModel.sortOff() }
+                    )
+                    FilterMenu(
+                        onFilter = { booksViewModel.filterOf(it) },
+                        onOff = { booksViewModel.filterOff() }
+                    )
+                }
+            )
+        },
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState

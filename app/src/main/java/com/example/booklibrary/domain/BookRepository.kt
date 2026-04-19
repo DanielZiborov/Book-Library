@@ -7,14 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface BookRepository {
-    fun getAllBooks(): Flow<List<BookEntity>>
+    fun getAllBooks(status: Status?, sortType: String?): Flow<List<BookEntity>>
     suspend fun refreshBooks(): NetworkResult<Unit>
     suspend fun upsertBook(
         book: BookEntity
     )
     suspend fun deleteBook(id: UUID)
-
-    fun sortByYear(): Flow<List<BookEntity>>
-    fun sortByRating(): Flow<List<BookEntity>>
-    fun filterOfStatus(status: Status): Flow<List<BookEntity>>
 }

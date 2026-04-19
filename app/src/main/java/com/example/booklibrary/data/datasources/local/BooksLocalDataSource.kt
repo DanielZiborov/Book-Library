@@ -4,13 +4,10 @@ import com.example.booklibrary.data.models.BookModel
 import kotlinx.coroutines.flow.Flow
 
 interface BooksLocalDataSource {
-    fun getBooksFromCache(): Flow<List<BookModel>>
+    fun getBooksFromCache(status: String?, sortType: String?): Flow<List<BookModel>>
     suspend fun upsertBooks(books: List<BookModel>)
     suspend fun upsertBook(
         book: BookModel
     )
     suspend fun deleteBook(id: String)
-    fun filterOfStatus(status: String): Flow<List<BookModel>>
-    fun sortByYear(): Flow<List<BookModel>>
-    fun sortByRating(): Flow<List<BookModel>>
 }
