@@ -1,5 +1,6 @@
 package com.example.booklibrary.presentation.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -63,6 +64,7 @@ class BooksViewModel @Inject constructor(
     )
 
     init {
+        Log.d("BOOKS_VIEW_MODEL","I'm init")
         refreshBooks()
     }
 

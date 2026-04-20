@@ -1,4 +1,4 @@
-package com.example.booklibrary.di.data.remote
+package com.example.booklibrary.di.network
 
 import com.example.booklibrary.data.datasources.remote.service.BooksApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

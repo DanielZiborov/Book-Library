@@ -1,4 +1,4 @@
-package com.example.booklibrary.di.data.local
+package com.example.booklibrary.di.database
 
 import android.content.Context
 import androidx.room.Room

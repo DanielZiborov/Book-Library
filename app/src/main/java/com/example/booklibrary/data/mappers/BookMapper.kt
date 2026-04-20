@@ -2,7 +2,6 @@ package com.example.booklibrary.data.mappers
 
 import com.example.booklibrary.data.models.BookModel
 import com.example.booklibrary.domain.entities.BookEntity
-import com.example.booklibrary.domain.entities.Status
 import java.time.LocalDate
 import java.util.UUID
 

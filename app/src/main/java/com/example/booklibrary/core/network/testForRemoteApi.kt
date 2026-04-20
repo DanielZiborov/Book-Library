@@ -40,6 +40,7 @@ val data = BookData(
             author = "TEST4",
             year = 1967,
             description = "TEST4",
+            readStatus = "не начата",
             updatedAt = "2026-04-05T10:00:00"
         )
     )

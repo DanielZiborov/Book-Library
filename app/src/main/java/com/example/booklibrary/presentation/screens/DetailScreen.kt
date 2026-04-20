@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.booklibrary.common.components.CustomTopAppBar
 import com.example.booklibrary.presentation.viewmodels.BookFormViewModel
@@ -28,7 +27,7 @@ fun DetailScreen(
     bookId: UUID,
     navController: NavController,
     booksViewModel: BooksViewModel,
-    formViewModel: BookFormViewModel = viewModel(),
+    formViewModel: BookFormViewModel,
 ) {
     val state = formViewModel.state
 
@@ -44,7 +43,7 @@ fun DetailScreen(
 
     Scaffold(
         topBar = {
-            CustomTopAppBar(book?.title ?: "No book")
+            CustomTopAppBar(book?.title ?: "")
         },
         snackbarHost = {
             SnackbarHost(
@@ -72,8 +71,8 @@ fun DetailScreen(
                                 coroutineScope = coroutineScope,
                                 snackbarHostState = snackbarHostState,
                             ) {
-                                booksViewModel.deleteBook(bookId)
                                 navController.popBackStack()
+                                booksViewModel.deleteBook(bookId)
                             }
                         },
                         enabled = formViewModel.isValid
