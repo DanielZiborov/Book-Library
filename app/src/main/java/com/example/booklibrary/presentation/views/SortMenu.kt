@@ -47,6 +47,13 @@ fun SortMenu(
                 }
             )
             DropdownMenuItem(
+                text = { Text("Author") },
+                onClick = {
+                    onSort("AUTHOR")
+                    expanded = false
+                }
+            )
+            DropdownMenuItem(
                 text = { Text("Reset") },
                 onClick = {
                     onOff()

@@ -44,6 +44,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -87,4 +89,11 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.59.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
     ksp("com.google.dagger:hilt-android-compiler:2.59.2")
+
+    //WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
+    ksp("androidx.hilt:hilt-compiler:1.3.0")
+
+    //Notifications
+    implementation("androidx.core:core-ktx:1.18.0")
 }

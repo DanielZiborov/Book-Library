@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -69,10 +72,41 @@ fun BookListScreen(
                         onSort = { booksViewModel.sortBy(it) },
                         onOff = { booksViewModel.sortOff() }
                     )
+
                     FilterMenu(
                         onFilter = { booksViewModel.filterOf(it) },
                         onOff = { booksViewModel.filterOff() }
                     )
+
+                    IconButton(
+                        onClick = {
+                            navController.navigate(
+                                route = Destination.Statistic.route
+                            ) {
+                                launchSingleTop = true
+                            }
+                        }
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.LibraryBooks,
+                            contentDescription = "Statistic of library",
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            navController.navigate(
+                                route = Destination.Settings.route
+                            ) {
+                                launchSingleTop = true
+                            }
+                        }
+                    ) {
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = "Settings",
+                        )
+                    }
                 }
             )
         },

@@ -8,7 +8,8 @@ import com.example.booklibrary.data.models.BookModel
     entities = [
         BookModel::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class BooksDb: RoomDatabase() {
     abstract val dao: BooksDao

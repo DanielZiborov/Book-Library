@@ -1,5 +1,9 @@
 package com.example.booklibrary.presentation.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -18,54 +25,64 @@ import com.example.booklibrary.navigation.Destination
 
 @Composable
 fun BookCard(bookInfo: BookEntity, navController: NavController) {
-    Card(
-        modifier = Modifier
-            .clickable {
-                navController.navigate(
-                    Destination.Details.createRoute(bookInfo.id)
-                ){
-                    launchSingleTop = true
-                }
-            }
-            .padding(8.dp)
+    val isVisible = rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) { isVisible.value = true }
+
+    AnimatedVisibility(
+        visible = isVisible.value,
+        enter = fadeIn(
+            tween(500)
+        ) + scaleIn(initialScale = 0.9f),
     ) {
-        Column(
+        Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 10.dp,
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+                .clickable {
+                    navController.navigate(
+                        Destination.Details.createRoute(bookInfo.id)
+                    ) {
+                        launchSingleTop = true
+                    }
+                }
+                .padding(8.dp)
         ) {
-            Text(
-                "Name of book: ${bookInfo.title}",
-                modifier = Modifier.padding(
-                    horizontal = 30.dp
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = 10.dp,
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text(
+                    "Name of book: ${bookInfo.title}",
+                    modifier = Modifier.padding(
+                        horizontal = 30.dp
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
 
-            Text(
-                "Author: ${bookInfo.author}",
-                modifier = Modifier.padding(
-                    horizontal = 30.dp
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+                Text(
+                    "Author: ${bookInfo.author}",
+                    modifier = Modifier.padding(
+                        horizontal = 30.dp
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
 
-            Text(
-                "Year: ${bookInfo.year}"
-            )
+                Text(
+                    "Year: ${bookInfo.year}"
+                )
 
-            Text(
-                "Description: ${bookInfo.description}",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(horizontal = 30.dp)
-            )
+                Text(
+                    "Description: ${bookInfo.description}",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(horizontal = 30.dp)
+                )
+            }
         }
     }
 }

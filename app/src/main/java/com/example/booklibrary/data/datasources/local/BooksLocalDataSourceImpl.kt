@@ -2,6 +2,7 @@ package com.example.booklibrary.data.datasources.local
 
 import com.example.booklibrary.data.datasources.local.db.BooksDao
 import com.example.booklibrary.data.models.BookModel
+import com.example.booklibrary.domain.entities.Statistic
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -23,5 +24,13 @@ class BooksLocalDataSourceImpl @Inject constructor(
 
     override suspend fun deleteBook(id: String) {
         booksDao.deleteBookById(id)
+    }
+
+    override fun getStatistic(): Flow<Statistic> {
+        return booksDao.getStatistic()
+    }
+
+    override suspend fun isReadingBooks(): Boolean {
+        return booksDao.isReadingBooks()
     }
 }

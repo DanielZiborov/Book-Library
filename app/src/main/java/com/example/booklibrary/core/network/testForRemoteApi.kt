@@ -8,7 +8,7 @@ val data = BookData(
         BookModel(
             id = "b1a2c3d4-1111-4a11-9f2b-1c7e8d9a0b11",
             title = "TEST1",
-            author = "TEST1",
+            author = "ABC",
             year = 1967,
             description = "TEST1",
             readStatus = "не начата",
@@ -17,7 +17,7 @@ val data = BookData(
         BookModel(
             id = "b2b3c4d5-2222-4b22-8d3c-2f6d4b7e2c22",
             title = "TEST2",
-            author = "TEST2",
+            author = "abc",
             year = 1866,
             description = "TEST2",
             readStatus = "в процессе",
@@ -28,7 +28,7 @@ val data = BookData(
         BookModel(
             id = "b3c4d5e6-3333-4c33-9e44-3f7e1d2c3d33",
             title = "TEST3",
-            author = "TEST3",
+            author = "def",
             year = 1967,
             description = "TEST3",
             readStatus = "прочитана",
@@ -37,7 +37,7 @@ val data = BookData(
         BookModel(
             id = "b4d5e6f7-4444-4d44-8f55-4a1b2c3d4e44",
             title = "TEST4",
-            author = "TEST4",
+            author = "az",
             year = 1967,
             description = "TEST4",
             readStatus = "не начата",

@@ -8,6 +8,7 @@ import com.example.booklibrary.data.mappers.toModel
 import com.example.booklibrary.data.mappers.toStatusModel
 import com.example.booklibrary.domain.BookRepository
 import com.example.booklibrary.domain.entities.BookEntity
+import com.example.booklibrary.domain.entities.Statistic
 import com.example.booklibrary.domain.entities.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -54,5 +55,13 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun deleteBook(id: UUID) {
         booksLocalDataSource.deleteBook(id.toString())
+    }
+
+    override fun getStatistic(): Flow<Statistic> {
+        return booksLocalDataSource.getStatistic()
+    }
+
+    override suspend fun isReadingBooks(): Boolean {
+        return booksLocalDataSource.isReadingBooks()
     }
 }

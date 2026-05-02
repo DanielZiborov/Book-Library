@@ -1,6 +1,5 @@
 package com.example.booklibrary.presentation.viewmodels
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,9 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.UUID
 import com.example.booklibrary.core.usecases.invoke
+import com.example.booklibrary.domain.entities.Statistic
 import com.example.booklibrary.domain.usecases.AddParams
+import com.example.booklibrary.domain.usecases.GetStatisticUseCase
 import com.example.booklibrary.domain.usecases.Parameters
 import com.example.booklibrary.domain.usecases.RedactParams
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +36,8 @@ class BooksViewModel @Inject constructor(
     private val redactionBookUseCase: RedactionBookUseCase,
     private val deleteBookUseCase: DeleteBookUseCase,
     private val getBooksUseCase: GetBooksUseCase,
-    private val refreshBooksUseCase: RefreshBooksUseCase
+    private val refreshBooksUseCase: RefreshBooksUseCase,
+    private val getStatisticUseCase: GetStatisticUseCase,
 ) : ViewModel() {
     private val _isRefreshing = mutableStateOf(false)
     val isRefreshing = _isRefreshing
@@ -63,8 +65,13 @@ class BooksViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
+    val statisticState = getStatisticUseCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = Statistic()
+    )
+
     init {
-        Log.d("BOOKS_VIEW_MODEL","I'm init")
         refreshBooks()
     }
 

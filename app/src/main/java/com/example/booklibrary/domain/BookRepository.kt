@@ -2,6 +2,7 @@ package com.example.booklibrary.domain
 
 import com.example.booklibrary.core.network.NetworkResult
 import com.example.booklibrary.domain.entities.BookEntity
+import com.example.booklibrary.domain.entities.Statistic
 import com.example.booklibrary.domain.entities.Status
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
@@ -13,4 +14,8 @@ interface BookRepository {
         book: BookEntity
     )
     suspend fun deleteBook(id: UUID)
+
+    fun getStatistic(): Flow<Statistic>
+
+    suspend fun isReadingBooks(): Boolean
 }

@@ -8,10 +8,14 @@ sealed class Destination(val route: String) {
         fun createRoute(bookId: UUID) = "details/$bookId"
     }
     data object Add : Destination(ADD)
+    data object Statistic : Destination(STATISTIC)
+    data object Settings : Destination(SETTINGS)
     companion object {
         const val BOOK_LIST = "booklist"
         const val ADD = "add"
         const val DETAILS = "details/{bookId}"
         const val BOOK_ID = "bookId"
+        const val STATISTIC = "statistic"
+        const val SETTINGS = "settings"
     }
 }
