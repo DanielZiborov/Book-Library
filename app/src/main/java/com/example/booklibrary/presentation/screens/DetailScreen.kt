@@ -31,7 +31,8 @@ fun DetailScreen(
 ) {
     val state = formViewModel.state
 
-    val books by booksViewModel.booksState.collectAsState()
+    val booksUiState by booksViewModel.uiState.collectAsState()
+    val books = booksUiState.books
     val book = books.find { it.id == bookId }
 
     val snackbarHostState = SnackbarHostState()

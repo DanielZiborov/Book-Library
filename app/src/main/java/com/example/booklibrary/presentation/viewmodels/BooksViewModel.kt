@@ -1,6 +1,5 @@
 package com.example.booklibrary.presentation.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.booklibrary.core.network.NetworkResult
@@ -16,18 +15,18 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.UUID
 import com.example.booklibrary.core.usecases.invoke
-import com.example.booklibrary.domain.entities.Statistic
 import com.example.booklibrary.domain.usecases.AddParams
 import com.example.booklibrary.domain.usecases.GetStatisticUseCase
 import com.example.booklibrary.domain.usecases.Parameters
 import com.example.booklibrary.domain.usecases.RedactParams
+import com.example.booklibrary.presentation.state.BookUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,45 +38,48 @@ class BooksViewModel @Inject constructor(
     private val refreshBooksUseCase: RefreshBooksUseCase,
     private val getStatisticUseCase: GetStatisticUseCase,
 ) : ViewModel() {
-    private val _isRefreshing = mutableStateOf(false)
-    val isRefreshing = _isRefreshing
-
-    private val _isLoading = mutableStateOf(true)
-    val isLoading = _isLoading
 
     private val _uiEvent = Channel<String>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private val _currentSort = MutableStateFlow<String?>(null)
-    private val _currentStatus = MutableStateFlow<Status?>(null)
+    private val _uiState = MutableStateFlow(BookUiState())
+    val uiState = _uiState.asStateFlow()
+
+    init {
+        initUiState()
+        refreshBooks()
+    }
+
+    private fun initUiState() {
+        viewModelScope.launch {
+            combine(
+                _uiState,
+                getBooksFlow(),
+                getStatisticUseCase()
+            ) { state, books, stat ->
+                state.copy(
+                    books = books,
+                    statistic = stat
+                )
+            }.collect { newState ->
+                _uiState.value = newState
+            }
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val booksState = combine(
-        _currentSort,
-        _currentStatus
+    private fun getBooksFlow() = combine(
+        _uiState.map { it.currentSort },
+        _uiState.map { it.currentStatus }
     ) { sort, status ->
         Parameters(status, sort)
     }.flatMapLatest { params ->
         getBooksUseCase(params)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
-
-    val statisticState = getStatisticUseCase().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = Statistic()
-    )
-
-    init {
-        refreshBooks()
     }
 
     fun refreshBooks() {
         viewModelScope.launch {
-            _isRefreshing.value = true
+            _uiState.value = _uiState.value.copy(isRefreshing = true)
 
             when (val resultOfRefresh = refreshBooksUseCase()) {
                 is NetworkResult.Success -> {}
@@ -87,8 +89,8 @@ class BooksViewModel @Inject constructor(
                 }
             }
 
-            _isRefreshing.value = false
-            _isLoading.value = false
+            _uiState.value = _uiState.value.copy(isRefreshing = false)
+            _uiState.value = _uiState.value.copy(isLoading = false)
         }
     }
 
@@ -153,18 +155,18 @@ class BooksViewModel @Inject constructor(
     }
 
     fun sortBy(typeOfSort: String) {
-        _currentSort.value = typeOfSort
+        _uiState.value = _uiState.value.copy(currentSort = typeOfSort)
     }
 
     fun filterOf(status: Status) {
-        _currentStatus.value = status
+        _uiState.value = _uiState.value.copy(currentStatus = status)
     }
 
     fun sortOff() {
-        _currentSort.value = null
+        _uiState.value = _uiState.value.copy(currentSort = null)
     }
 
     fun filterOff() {
-        _currentStatus.value = null
+        _uiState.value = _uiState.value.copy(currentStatus = null)
     }
 }

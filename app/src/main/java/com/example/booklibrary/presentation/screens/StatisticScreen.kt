@@ -1,8 +1,5 @@
 package com.example.booklibrary.presentation.screens
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +22,8 @@ import com.example.booklibrary.presentation.viewmodels.BooksViewModel
 fun StatisticScreen(
     booksViewModel: BooksViewModel
 ) {
-    val statistic by booksViewModel.statisticState.collectAsState()
+    val booksUiState by booksViewModel.uiState.collectAsState()
+    val statistic = booksUiState.statistic
 
     Scaffold(
         topBar = {

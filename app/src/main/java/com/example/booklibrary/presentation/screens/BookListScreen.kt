@@ -41,10 +41,11 @@ fun BookListScreen(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val books by booksViewModel.booksState.collectAsState()
+    val booksUiState by booksViewModel.uiState.collectAsState()
 
-    val isLoading by booksViewModel.isLoading
-    val isRefreshing by booksViewModel.isRefreshing
+    val books = booksUiState.books
+    val isLoading = booksUiState.isLoading
+    val isRefreshing = booksUiState.isRefreshing
 
     LaunchedEffect(Unit) {
         booksViewModel.uiEvent.collect {
